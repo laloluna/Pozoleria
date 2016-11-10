@@ -30,5 +30,11 @@ class SeedCompras extends Seeder
         	'cantidad' => 83,
         	'tipoCantidad' => 1, 
     	]);
+        DB::table('Compras')->insert([
+            'id' => 4,
+            'materiaPrima' => 4,
+            'cantidad' => 67,
+            'tipoCantidad' => 4, 
+        ]);
     }
 }

@@ -13,15 +13,23 @@ class SeedTiposCantidad extends Seeder
     {
     	DB::table('TiposCantidad')->insert([
     		'id' => 1,
-        	'nombre' => 'kilos',
+        	'nombre' => 'Kilos',
     	]);
     	DB::table('TiposCantidad')->insert([
     		'id' => 2,
-        	'nombre' => 'onzas',
+        	'nombre' => 'Gramos',
     	]);
     	DB::table('TiposCantidad')->insert([
     		'id' => 3,
-        	'nombre' => 'mililitros',
+        	'nombre' => 'Litros',
     	]);
+        DB::table('TiposCantidad')->insert([
+            'id' => 4,
+            'nombre' => 'Mililitros',
+        ]);
+        DB::table('TiposCantidad')->insert([
+            'id' => 5,
+            'nombre' => 'Onzas',
+        ]);
     }
 }

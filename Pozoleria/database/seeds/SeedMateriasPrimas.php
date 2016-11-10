@@ -29,5 +29,11 @@ class SeedMateriasPrimas extends Seeder
         	'precio' => 56,
         	'proveedor' => 1, 
     	]);
+        DB::table('MateriasPrimas')->insert([
+            'id' => 4,
+            'nombre' => 'Lechuga',
+            'precio' => 23,
+            'proveedor' => 4, 
+        ]);
     }
 }
