@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('proveedores', 'ProveedorController');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
