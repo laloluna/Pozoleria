@@ -11,12 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware'=>'auth'], function() {
+
+    Route::get('/home', 'HomeController@index')->name('/home');
+
+    Route::get('/', function () {
+        return view('login');
+    });
+
+    Route::resource('proveedores', 'ProveedorController');
+
+    Auth::routes();
+
+    Route::get('logout', function(){
+        Auth::logout();
+        return redirect()->route('/home');
+    })->name('logout');
+
 });
 
-Route::resource('proveedores', 'ProveedorController');
-
 Auth::routes();
-
-Route::get('/home', 'HomeController@index');
