@@ -1,7 +1,7 @@
 <div class="form-panel">
 	<div class="form-group">
 		{!! Form::label('materiaPrima', 'Ingresa la materia prima:'); !!}
-		{!! Form::select('materiaPrima', $materiasPrimas); !!}
+		{!! Form::select('materiaPrima', $materiasPrimas, $firstM); !!}
 	</div>
 	<div class="form-group">
 		{!! Form::label('cantidad', 'Escriba la cantidad de producto'); !!}
@@ -9,7 +9,7 @@
 	</div>
 	<div class="form-group">
 		{!! Form::label('tipocantidad', 'Selecciona una unidad:'); !!}
-		{!! Form::select('tipoCantidad', $tiposCantidad) !!}
+		{!! Form::select('tipoCantidad', $tiposCantidad, $firstC) !!}
 	</div>
 	<div class="form-group">
 		{!! Form::submit($submit_text, ['class'=>'btn btn-success']); !!}

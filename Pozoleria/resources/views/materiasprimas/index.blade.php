@@ -19,7 +19,8 @@
                         <th>Nombre</th>
                         <th>Precio</th>
                         <th>Proveedor</th>
-                        <th>Acciones</th>
+                        <th>Editar</th>
+                        <th>Borrar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,12 +30,14 @@
                             <td class="center">{{ $materiaprima->nombre }}</td>
                             <td class="center">{{ $materiaprima->precio }}</td>
                             <td class="center">{{ App\Proveedor::find($materiaprima->proveedor)->nombre }}</td>
-                            <td width="15%">
-                                <div class="col-xs-2 col-xs-offset-2">
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                            <td width="7%">
+                                <div>
+                                    <button class="btn btn-primary btn-xs btn-block"><i class="fa fa-pencil"></i></button>
                                 </div>
-                                <div class="col-xs-2">
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                            </td>
+                            <td width="7%">
+                                <div>
+                                    <button class="btn btn-danger btn-xs btn-block"><i class="fa fa-trash-o "></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -45,7 +48,7 @@
     </div>
     <div align="right">
         {!! Form::open( [ 'method' => 'GET', 'route' =>['materiasprimas.create']]) !!}
-        {!! Form::submit('Agregar una materia prima', ['class' => 'btn btn-success']) !!}
+        {!! Form::submit('Agregar una materia prima', ['class' => 'btn btn-success btn-block']) !!}
         {!! Form::close() !!}
     </div>
 @endsection

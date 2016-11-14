@@ -28,12 +28,12 @@ class SeedProveedores extends Seeder
     	]);
     	DB::table('Proveedores')->insert([
     		'id' => 4,
-        	'nombre' => 'Elia Flores',
+        	'nombre' => 'Elia Galindo',
         	'telefono' => '2221141858',
     	]);
         DB::table('Proveedores')->insert([
             'id' => 5,
-            'nombre' => 'Jesus Galindo',
+            'nombre' => 'Jesus Flores',
             'telefono' => '2225928371',
         ]);
     }

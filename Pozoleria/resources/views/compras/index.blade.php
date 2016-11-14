@@ -19,7 +19,8 @@
                         <th>Materia Prima</th>
                         <th>Cantidad</th>
                         <th>Unidad</th>
-                        <th>Acciones</th>
+                        <th>Editar</th>
+                        <th>Borrar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,14 +30,18 @@
                             <td class="center">{{ App\MateriaPrima::find($compra->materiaPrima)->nombre }}</td>
                             <td class="center">{{ $compra->cantidad }}</td>
                             <td class="center">{{ App\TipoCantidad::find($compra->tipoCantidad)->nombre }}</td>
-                            <td width="15%">
-                                <div class="col-xs-2 col-xs-offset-2">
+                            <td width="7%">
+                                <div>
                                     {!! Form::open( [ 'method' => 'GET', 'route' =>['compras.edit', $compra->id]]) !!}
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-primary btn-xs btn-block"><i class="fa fa-pencil"></i></button>
                                     {!! Form::close()!!}
                                 </div>
-                                <div class="col-xs-2">
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                            </td>
+                            <td width="7%">
+                                <div>
+                                    {!! Form::open( [ 'method' => 'delete', 'route' =>['compras.destroy', $compra->id]]) !!}
+                                    <button class="btn btn-danger btn-xs btn-block"><i class="fa fa-trash-o "></i></button>
+                                    {!! Form::close()!!}
                                 </div>
                             </td>
                         </tr>
@@ -45,9 +50,9 @@
             </table>
         </section>
     </div>
-    <div align="right">
+    <div>
         {!! Form::open( [ 'method' => 'GET', 'route' =>['compras.create']]) !!}
-        {!! Form::submit('Agregar una compra', ['class' => 'btn btn-success']) !!}
+        {!! Form::submit('Agregar una compra', ['class' => 'btn btn-success btn-block']) !!}
         {!! Form::close() !!}
     </div>
 
