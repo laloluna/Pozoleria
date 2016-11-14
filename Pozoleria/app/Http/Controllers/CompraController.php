@@ -156,7 +156,7 @@ class CompraController extends Controller
         $compra->tipoCantidad = $tipoFinal;
         $compra->save();
 
-        $request->session()->flash("message", "Creado con exito");
+        $request->session()->flash("message", "Actualizado con exito");
         return redirect()->route("compras.index");
     }
 
@@ -171,12 +171,10 @@ class CompraController extends Controller
         $compra = Compra::where('id', $id)->firstOrFail();
         $deleted = $compra->delete();
 
-        if($deleted){
-            $request->session()->flash('deleted', "Eliminado con &eacute;xito");
-        }
-        else{
-            $request->session()->flash('failDeleted', "Algo sali&oacute; mal. Por favor contacta a desarrollo.");
-        }
+        if($deleted)
+            $request->session()->flash('message', 'Eliminado con &eacute;xito');
+        else
+            $request->session()->flash('error', 'Algo sali&oacute mal. Contacte a desarrollo');
 
         return redirect()->route("compras.index");
     }

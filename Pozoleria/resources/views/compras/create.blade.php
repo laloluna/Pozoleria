@@ -3,12 +3,9 @@
 @section('description', 'En esta secci&oacute;n podr&aacute;s agregar una compra')
 
 @section('title')
-
-
     <div>
         <i class= "fa fa-list-alt"></i> Informaci&oacute;n de compra
     </div>
-
 @endsection
 
 @section('content')

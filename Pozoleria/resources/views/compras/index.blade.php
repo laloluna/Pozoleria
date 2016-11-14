@@ -9,6 +9,19 @@
 
 @section('description', 'Esta es la pagina de compras')
 
+@if (session('message'))
+    <div class="alert alert-success">
+        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ session('message') }}
+    </div>
+@endif
+@if (session('error'))
+    <div class="alert alert-danger">
+        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ session('error') }}
+    </div>
+@endif
+
 @section('content')
     <div>
         <section>
@@ -39,7 +52,7 @@
                             </td>
                             <td width="7%">
                                 <div>
-                                    {!! Form::open( [ 'method' => 'delete', 'route' =>['compras.destroy', $compra->id]]) !!}
+                                    {!! Form::open( [ 'method' => 'DELETE', 'route' =>['compras.destroy', $compra->id]]) !!}
                                     <button class="btn btn-danger btn-xs btn-block"><i class="fa fa-trash-o "></i></button>
                                     {!! Form::close()!!}
                                 </div>

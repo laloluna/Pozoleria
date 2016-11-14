@@ -25,7 +25,8 @@ class TipoCantidadController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('tiposcantidad.create');
     }
 
     /**
@@ -36,7 +37,24 @@ class TipoCantidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            "nombre" => "required|string",
+        ]);
+
+        $proveedor = $request->all();
+
+        $alreadyExist = TipoCantidad::where('nombre', $request->nombre)->count();
+
+        if($alreadyExist == 0)
+            TipoCantidad::create($proveedor);
+        else
+        {
+            $request->session()->flash("error", "Ese proveedor ya existe");
+            return back()->withInput();
+        }
+
+        $request->session()->flash("message", "Creado con exito");
+        return redirect()->route("tiposcantidad.index");
     }
 
     /**
@@ -58,7 +76,8 @@ class TipoCantidadController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tipocantidad = TipoCantidad::where('id', $id)->firstOrFail();
+        return view('tiposcantidad.edit', ['tipocantidad' => $tipocantidad]);
     }
 
     /**
@@ -70,7 +89,24 @@ class TipoCantidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tipocantidad = TipoCantidad::where('id', $id)->firstOrFail();
+
+        $this->validate($request,[
+            "nombre" => "required|string",
+        ]);
+
+        $updating = $request->all();
+        
+        $alreadyExists = TipoCantidad::where('nombre', $request->nombre)->where('id', '<>', $id)->count();
+        if($alreadyExists == 0){
+            $tipocantidad->update($updating);
+        }else{
+            $request->session()->flash('error', "Este proveedor ya existe");
+            return back()->withInput();
+        }
+
+        $request->session()->flash("message", "Actualizado con exito");
+        return redirect()->route("tiposcantidad.index");  
     }
 
     /**
@@ -79,8 +115,16 @@ class TipoCantidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $tipocantidad = TipoCantidad::where('id', $id)->firstOrFail();
+        $deleted = $tipocantidad->delete();
+
+        if($deleted)
+            $request->session()->flash('message', 'Eliminado con &eacute;xito');
+        else
+            $request->session()->flash('error', 'Algo sali&oacute mal. Contacte a desarrollo');
+
+        return redirect()->route('tiposcantidad.index');
     }
 }
