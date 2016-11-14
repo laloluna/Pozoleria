@@ -2,12 +2,12 @@
 
 @section('title')
     <div>
-        <i class= "fa fa-truck"></i> Compras
+        <i class= "fa fa-balance-scale"></i> Unidades
     </div>
 
 @endsection
 
-@section('description', 'Esta es la pagina de proveedores')
+@section('description', 'Esta es la pagina de unidades')
 
 @section('content')
     <div>
@@ -17,16 +17,14 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
-                        <th>Telefono</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($proveedores as $proveedor)
+                    @foreach ($tiposcantidad as $tipocantidad)
                         <tr>
-                            <td class="center" width="5%">{{ $proveedor->id }} </td>
-                            <td class="center">{{ $proveedor->nombre }}</td>
-                            <td class="center">{{ $proveedor->telefono }}</td>
+                            <td class="center" width="5%">{{ $tipocantidad->id }} </td>
+                            <td class="center">{{ $tipocantidad->nombre }}</td>
                             <td width="15%">
                                 <div class="col-xs-2 col-xs-offset-2">
                                     <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
@@ -42,8 +40,8 @@
         </section>
     </div>
     <div align="right">
-        {!! Form::open( [ 'method' => 'GET', 'route' =>['proveedores.create']]) !!}
-        {!! Form::submit('Agregar un proveedor', ['class' => 'btn btn-success']) !!}
+        {!! Form::open( [ 'method' => 'GET', 'route' =>['tiposcantidad.create']]) !!}
+        {!! Form::submit('Agregar una unidad', ['class' => 'btn btn-success']) !!}
         {!! Form::close() !!}
     </div>
 @endsection

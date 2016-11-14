@@ -21,6 +21,12 @@ Route::group(['middleware'=>'auth'], function() {
 
     Route::resource('proveedores', 'ProveedorController');
 
+    Route::resource('materiasprimas', 'MateriaPrimaController');
+
+    Route::resource('tiposcantidad', 'TipoCantidadController');
+
+    Route::resource('compras', 'CompraController');
+
     Auth::routes();
 
     Route::get('logout', function(){

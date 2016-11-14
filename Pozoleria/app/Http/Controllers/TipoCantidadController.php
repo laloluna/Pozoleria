@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\TipoCantidad;
+
 class TipoCantidadController extends Controller
 {
     /**
@@ -13,7 +15,7 @@ class TipoCantidadController extends Controller
      */
     public function index()
     {
-        //
+        return view('tiposcantidad.index', ['tiposcantidad' => TipoCantidad::all()]);
     }
 
     /**

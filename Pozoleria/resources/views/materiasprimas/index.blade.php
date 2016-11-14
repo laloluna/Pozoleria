@@ -2,12 +2,12 @@
 
 @section('title')
     <div>
-        <i class= "fa fa-truck"></i> Compras
+        <i class= "fa fa-cutlery"></i> Materias Primas
     </div>
 
 @endsection
 
-@section('description', 'Esta es la pagina de proveedores')
+@section('description', 'Esta es la pagina de materias primas')
 
 @section('content')
     <div>
@@ -17,16 +17,18 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
-                        <th>Telefono</th>
+                        <th>Precio</th>
+                        <th>Proveedor</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($proveedores as $proveedor)
+                    @foreach ($materiasprimas as $materiaprima)
                         <tr>
-                            <td class="center" width="5%">{{ $proveedor->id }} </td>
-                            <td class="center">{{ $proveedor->nombre }}</td>
-                            <td class="center">{{ $proveedor->telefono }}</td>
+                            <td class="center" width="5%">{{ $materiaprima->id }} </td>
+                            <td class="center">{{ $materiaprima->nombre }}</td>
+                            <td class="center">{{ $materiaprima->precio }}</td>
+                            <td class="center">{{ App\Proveedor::find($materiaprima->proveedor)->nombre }}</td>
                             <td width="15%">
                                 <div class="col-xs-2 col-xs-offset-2">
                                     <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
@@ -42,8 +44,8 @@
         </section>
     </div>
     <div align="right">
-        {!! Form::open( [ 'method' => 'GET', 'route' =>['proveedores.create']]) !!}
-        {!! Form::submit('Agregar un proveedor', ['class' => 'btn btn-success']) !!}
+        {!! Form::open( [ 'method' => 'GET', 'route' =>['materiasprimas.create']]) !!}
+        {!! Form::submit('Agregar una materia prima', ['class' => 'btn btn-success']) !!}
         {!! Form::close() !!}
     </div>
 @endsection

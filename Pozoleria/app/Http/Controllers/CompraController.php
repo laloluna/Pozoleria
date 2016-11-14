@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Compra;
+
+use App\MateriaPrima;
+
+use App\TipoCantidad;
+
 class CompraController extends Controller
 {
     /**
@@ -13,7 +19,7 @@ class CompraController extends Controller
      */
     public function index()
     {
-        //
+        return view('compras.index', ['compras' => Compra::all()]);
     }
 
     /**
@@ -23,7 +29,15 @@ class CompraController extends Controller
      */
     public function create()
     {
-        //
+        $materiaPrimaId = MateriaPrima::select('nombre')->orderBy('id')->get();
+        foreach ($materiaPrimaId as $materiaPrima) {
+            $idMat[] = $materiaPrima->nombre;
+        }
+        $tipoCantidadId = TipoCantidad::select('nombre')->orderBy('id')->get();
+        foreach ($tipoCantidadId as $tipoCantidad) {
+            $idTipo[] = $tipoCantidad->nombre;
+        }
+        return view('compras.create', ['materiasPrimas'=>$idMat], ['tiposCantidad'=>$idTipo]);
     }
 
     /**
@@ -34,7 +48,32 @@ class CompraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $message = "";
+        $this->validate($request,[
+            "materiaPrima" => "required|string",
+            "cantidad" => "required|integer",
+            "tipoCantidad" => "required|string",
+            ]);
+
+        $indexMat = $request->materiaPrima;
+        $indexTipo = $request->tipoCantidad;
+
+        $materiaPrimaId = MateriaPrima::select('nombre')->orderBy('id')->get();
+        foreach ($materiaPrimaId as $materiaPrima) {
+            $idMat[] = $materiaPrima->nombre;
+        }
+        $tipoCantidadId = TipoCantidad::select('nombre')->orderBy('id')->get();
+        foreach ($tipoCantidadId as $tipoCantidad) {
+            $idTipo[] = $tipoCantidad->nombre;
+        }
+
+        $materiaFinal = MateriaPrima::where('nombre', $idMat[$indexMat])->first()->id;
+        $tipoFinal = TipoCantidad::where('nombre', $idTipo[$indexTipo])->first()->id;
+
+        Compra::create(["materiaPrima"=>$materiaFinal, "cantidad"=>$request->cantidad, "tipoCantidad"=>$tipoFinal]);
+
+        $request->session()->flash("message", "Creado con exito");
+        return redirect()->route("compras.index");
     }
 
     /**

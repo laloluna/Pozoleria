@@ -2,12 +2,12 @@
 
 @section('title')
     <div>
-        <i class= "fa fa-truck"></i> Compras
+        <i class= "fa fa-credit-card"></i> Compras
     </div>
 
 @endsection
 
-@section('description', 'Esta es la pagina de proveedores')
+@section('description', 'Esta es la pagina de compras')
 
 @section('content')
     <div>
@@ -16,20 +16,24 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Telefono</th>
+                        <th>Materia Prima</th>
+                        <th>Cantidad</th>
+                        <th>Unidad</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($proveedores as $proveedor)
+                    @foreach ($compras as $compra)
                         <tr>
-                            <td class="center" width="5%">{{ $proveedor->id }} </td>
-                            <td class="center">{{ $proveedor->nombre }}</td>
-                            <td class="center">{{ $proveedor->telefono }}</td>
+                            <td class="center" width="5%">{{ $compra->id }} </td>
+                            <td class="center">{{ App\MateriaPrima::find($compra->materiaPrima)->nombre }}</td>
+                            <td class="center">{{ $compra->cantidad }}</td>
+                            <td class="center">{{ App\TipoCantidad::find($compra->tipoCantidad)->nombre }}</td>
                             <td width="15%">
                                 <div class="col-xs-2 col-xs-offset-2">
+                                    {!! Form::open( [ 'method' => 'GET', 'route' =>['compras.edit', $compra->id]]) !!}
                                     <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                    {!! Form::close()!!}
                                 </div>
                                 <div class="col-xs-2">
                                     <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
@@ -42,8 +46,9 @@
         </section>
     </div>
     <div align="right">
-        {!! Form::open( [ 'method' => 'GET', 'route' =>['proveedores.create']]) !!}
-        {!! Form::submit('Agregar un proveedor', ['class' => 'btn btn-success']) !!}
+        {!! Form::open( [ 'method' => 'GET', 'route' =>['compras.create']]) !!}
+        {!! Form::submit('Agregar una compra', ['class' => 'btn btn-success']) !!}
         {!! Form::close() !!}
     </div>
+
 @endsection

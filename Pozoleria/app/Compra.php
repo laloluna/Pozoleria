@@ -8,7 +8,7 @@ class Compra extends Model
 {
 	protected $table = "Compras";
 
-    protected $fillable = ['id', 'cantidad'];
+    protected $fillable = ['id','materiaPrima', 'cantidad', 'tipoCantidad'];
 
     public function materiasPrimas()
     {

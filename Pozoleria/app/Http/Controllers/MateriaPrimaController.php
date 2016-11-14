@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\MateriaPrima;
+
 class MateriaPrimaController extends Controller
 {
     /**
@@ -13,7 +15,7 @@ class MateriaPrimaController extends Controller
      */
     public function index()
     {
-        //
+        return view('materiasprimas.index', ['materiasprimas' => MateriaPrima::all()]);
     }
 
     /**
