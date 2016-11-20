@@ -16,6 +16,8 @@ class MateriasPrimas extends Migration
         Schema::create('MateriasPrimas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+            $table->integer('tipoCantidad')->unsigned();
+            $table->foreign('tipoCantidad')->references('id')->on('TiposCantidad')->onDelete('Cascade');
             $table->integer('precio');
             $table->integer('proveedor')->unsigned();
             $table->foreign('proveedor')->references('id')->on('Proveedores')->onDelete('Cascade');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\MateriaPrima;
+use App\Proveedor;
+use App\TipoCantidad;
 
 class MateriaPrimaController extends Controller
 {
@@ -25,7 +27,15 @@ class MateriaPrimaController extends Controller
      */
     public function create()
     {
-        //
+        $proveedoresQuery = Proveedor::select('nombre')->orderBy('id')->get();
+        foreach ($proveedoresQuery as $proveedor) {
+            $proveedores[] = $proveedor->nombre;
+        }
+        $unidadesQuery = TipoCantidad::select('nombre')->orderBy('id')->get();
+        foreach ($unidadesQuery as $unidad) {
+            $unidades[] = $unidad->nombre;
+        }
+        return view('materiasprimas.create', ['firstP' => 0, 'firstU' => 0, 'proveedores' => $proveedores, 'unidades' => $unidades]);
     }
 
     /**
@@ -36,7 +46,33 @@ class MateriaPrimaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            "nombre"=>"required|string",
+            "tipoCantidad"=>"required|string",
+            "precio"=>"required|integer",
+            "proveedor"=>"required|string",
+        ]);
+
+        $indexProveedor = $request->proveedor;
+        $indexUnidad = $request->tipoCantidad;
+
+        $proveedoresQuery = Proveedor::select('nombre')->get();
+        $unidadesQuery = TipoCantidad::select('nombre')->get();
+
+        foreach ($proveedoresQuery as $proveedor) {
+            $proveedores[] = $proveedor->nombre;
+        }
+        foreach ($unidadesQuery as $unidad) {
+            $unidades[] = $unidad->nombre;
+        }
+
+        $proveedorFinal = Proveedor::where('nombre', $proveedores[$indexProveedor])->first()->id;
+        $unidadFinal = TipoCantidad::where('nombre', $unidades[$indexUnidad])->first()->id;
+
+        MateriaPrima::create(["nombre"=>$request->nombre, "tipoCantidad"=>$unidadFinal, "precio"=>$request->precio, "proveedor"=>$proveedorFinal]);
+
+        $request->session()->flash("message", "Creado con exito");
+        return redirect()->route("materiasprimas.index");
     }
 
     /**
@@ -58,7 +94,23 @@ class MateriaPrimaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $materiaprima = MateriaPrima::where('id', $id)->firstOrFail();
+
+        $unidadesQuery = TipoCantidad::select('nombre')->get();
+        foreach ($unidadesQuery as $unidad) {
+            $unidades[] = $unidad->nombre;
+        }
+        $unidadNombre = MateriaPrima::find($id)->tiposCantidad()->first()->nombre;
+        $keyUnidad = array_search($unidadNombre, $unidades);
+
+        $proveedoresQuery = Proveedor::select('nombre')->get();
+        foreach ($proveedoresQuery as $proveedor) {
+            $proveedores[] = $proveedor->nombre;
+        }
+        $proveedorNombre = MateriaPrima::find($id)->proveedores()->first()->nombre;
+        $keyProveedor = array_search($proveedorNombre, $proveedores);
+
+        return view('materiasprimas.edit', ['materiaprima' => $materiaprima, 'firstU' => $keyUnidad, 'firstP' => $keyProveedor, 'unidades' => $unidades, 'proveedores' => $proveedores]);
     }
 
     /**
@@ -70,7 +122,37 @@ class MateriaPrimaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            "nombre" => "required|string",
+            "tipoCantidad" => "required|string",
+            "precio" => "required|integer",
+            "proveedor" => "required|string",
+        ]);
+
+        $materiaPrima = MateriaPrima::where('id', $id)->firstOrFail();
+
+        $indexUnidad = $request->tipoCantidad;
+        $unidadesQuery = TipoCantidad::select('nombre')->get();
+        foreach ($unidadesQuery as $unidad) {
+            $unidades[] = $unidad->nombre;
+        }
+        $unidadFinal = TipoCantidad::where('nombre', $unidades[$indexUnidad])->first()->id;
+
+        $indexProveedor = $request->proveedor;
+        $proveedoresQuery = Proveedor::select('nombre')->get();
+        foreach ($proveedoresQuery as $proveedor) {
+            $proveedores[] = $proveedor->nombre;
+        }
+        $proveedorFinal = Proveedor::where('nombre', $proveedores[$indexProveedor])->first()->id;
+
+        $updating = $request->all();
+        $updating['tipoCantidad'] = $unidadFinal;
+        $updating['proveedor'] = $proveedorFinal;
+
+        $materiaPrima->update($updating);
+
+        $request->session()->flash("message", "Actualizado con exito");
+        return redirect()->route("materiasprimas.index");
     }
 
     /**
@@ -79,7 +161,7 @@ class MateriaPrimaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //
     }

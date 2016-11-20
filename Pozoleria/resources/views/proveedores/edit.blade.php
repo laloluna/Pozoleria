@@ -11,7 +11,7 @@
 
 @section('content')
 
-<div> 
+<div>
 {!! Form::model($proveedor,
     [
     'method' => 'PUT',

@@ -10,8 +10,8 @@ class TipoCantidad extends Model
 
     protected $fillable = ['id', 'nombre'];
 
-    public function compras()
+    public function materiasPrimas()
     {
-        return $this->hasMany('App\Compra', 'tipoCantidad');
+        return $this->hasMany('App\MateriaPrima', 'tipoCantidad');
     }
 }

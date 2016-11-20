@@ -8,10 +8,6 @@
 		{!! Form::number('cantidad'); !!}
 	</div>
 	<div class="form-group">
-		{!! Form::label('tipocantidad', 'Selecciona una unidad:'); !!}
-		{!! Form::select('tipoCantidad', $tiposCantidad, $firstC) !!}
-	</div>
-	<div class="form-group">
 		{!! Form::submit($submit_text, ['class'=>'btn btn-success']); !!}
 		{!! Form::close() !!}
 	</div>

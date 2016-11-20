@@ -31,7 +31,6 @@
                         <th>ID</th>
                         <th>Materia Prima</th>
                         <th>Cantidad</th>
-                        <th>Unidad</th>
                         <th>Editar</th>
                         <th>Borrar</th>
                     </tr>
@@ -42,7 +41,6 @@
                             <td class="center" width="5%">{{ $compra->id }} </td>
                             <td class="center">{{ App\MateriaPrima::find($compra->materiaPrima)->nombre }}</td>
                             <td class="center">{{ $compra->cantidad }}</td>
-                            <td class="center">{{ App\TipoCantidad::find($compra->tipoCantidad)->nombre }}</td>
                             <td width="7%">
                                 <div>
                                     {!! Form::open( [ 'method' => 'GET', 'route' =>['compras.edit', $compra->id]]) !!}

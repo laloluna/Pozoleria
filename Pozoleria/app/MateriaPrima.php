@@ -12,7 +12,7 @@ class MateriaPrima extends Model
 {
     protected $table = "MateriasPrimas";
 
-    protected $fillable = ['id', 'nombre', 'precio'];
+    protected $fillable = ['id', 'nombre', 'tipoCantidad', 'precio', 'proveedor'];
 
     public function compras()
     {
@@ -22,5 +22,10 @@ class MateriaPrima extends Model
     public function proveedores()
     {
         return $this->belongsTo('App\Proveedor', 'proveedor');
+    }
+
+    public function tiposCantidad()
+    {
+        return $this->belongsTo('App\TipoCantidad', 'tipoCantidad');
     }
 }

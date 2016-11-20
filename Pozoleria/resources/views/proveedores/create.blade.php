@@ -33,7 +33,7 @@
 
 @section('content')
 
-<div class="col-sm-12"> 
+<div>
     {!! Form::model(new App\Proveedor, ['route' =>'proveedores.store']) !!}
     @include('proveedores.form', ['submit_text' => 'Crear'])
 </div>

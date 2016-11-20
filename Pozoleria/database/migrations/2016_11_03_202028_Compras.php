@@ -18,8 +18,6 @@ class Compras extends Migration
             $table->integer('materiaPrima')->unsigned();
             $table->foreign('materiaPrima')->references('id')->on('MateriasPrimas')->onDelete('Cascade');
             $table->integer('cantidad');
-            $table->integer('tipoCantidad')->unsigned();
-            $table->foreign('tipoCantidad')->references('id')->on('TiposCantidad')->onDelete('Cascade');
             $table->timestamps();
         });
     }

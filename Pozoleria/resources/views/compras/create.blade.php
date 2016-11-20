@@ -33,7 +33,7 @@
     </div>
 @endif
 
-<div class="col-sm-12"> 
+<div>
     {!! Form::model(new App\Compra, ['route' =>'compras.store', 'files' => true ]) !!}
     @include('compras.form', ['submit_text' => 'Crear'])
 </div>

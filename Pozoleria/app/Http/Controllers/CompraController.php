@@ -33,11 +33,7 @@ class CompraController extends Controller
         foreach ($materiaPrimaId as $materiaPrima) {
             $idMat[] = $materiaPrima->nombre;
         }
-        $tipoCantidadId = TipoCantidad::select('nombre')->orderBy('id')->get();
-        foreach ($tipoCantidadId as $tipoCantidad) {
-            $idTipo[] = $tipoCantidad->nombre;
-        }
-        return view('compras.create', ['firstM'=> 0, 'firstC'=> 0, 'materiasPrimas'=>$idMat, 'tiposCantidad'=>$idTipo]);
+        return view('compras.create', ['firstM'=> 0, 'materiasPrimas'=>$idMat]);
     }
 
     /**
@@ -48,29 +44,21 @@ class CompraController extends Controller
      */
     public function store(Request $request)
     {
-        $message = "";
         $this->validate($request,[
             "materiaPrima" => "required|string",
             "cantidad" => "required|integer",
-            "tipoCantidad" => "required|string",
-            ]);
+        ]);
 
         $indexMat = $request->materiaPrima;
-        $indexTipo = $request->tipoCantidad;
 
         $materiaPrimaId = MateriaPrima::select('nombre')->get();
         foreach ($materiaPrimaId as $materiaPrima) {
             $idMat[] = $materiaPrima->nombre;
         }
-        $tipoCantidadId = TipoCantidad::select('nombre')->get();
-        foreach ($tipoCantidadId as $tipoCantidad) {
-            $idTipo[] = $tipoCantidad->nombre;
-        }
 
         $materiaFinal = MateriaPrima::where('nombre', $idMat[$indexMat])->first()->id;
-        $tipoFinal = TipoCantidad::where('nombre', $idTipo[$indexTipo])->first()->id;
 
-        Compra::create(["materiaPrima"=>$materiaFinal, "cantidad"=>$request->cantidad, "tipoCantidad"=>$tipoFinal]);
+        Compra::create(["materiaPrima"=>$materiaFinal, "cantidad"=>$request->cantidad]);
 
         $request->session()->flash("message", "Creado con exito");
         return redirect()->route("compras.index");
@@ -99,22 +87,14 @@ class CompraController extends Controller
         foreach ($materiaPrimaId as $materiaPrima) {
             $idMat[] = $materiaPrima->nombre;
         }
-        $tipoCantidadId = TipoCantidad::select('nombre')->get();
-        foreach ($tipoCantidadId as $tipoCantidad) {
-            $idTipo[] = $tipoCantidad->nombre;
-        }
 
         $compra = Compra::where('id', $id)->firstOrFail();
 
         $nombreMateriaPrima = Compra::find($id)->materiasPrimas()->first()->nombre;
-        $nombreTipoCantidad = Compra::find($id)->tiposCantidad()->first()->nombre;
 
         $keyMat = array_search($nombreMateriaPrima, $idMat);
-        $keyTipo = array_search($nombreTipoCantidad, $idTipo);
 
-        
-
-        return view('compras.edit', ['firstM'=> $keyMat, 'firstC'=> $keyTipo, 'compra'=>$compra, 'materiasPrimas'=>$idMat, 'tiposCantidad'=>$idTipo]);
+        return view('compras.edit', ['firstM'=> $keyMat, 'compra'=>$compra, 'materiasPrimas'=>$idMat]);
     }
 
     /**
@@ -131,29 +111,19 @@ class CompraController extends Controller
         $this->validate($request,[
             "materiaPrima" => "required|string",
             "cantidad" => "required|integer",
-            "tipoCantidad" => "required|string",
-            ]);
+        ]);
 
-
-        $updating = $request->all();
         $indexMat = $request->materiaPrima;
-        $indexTipo = $request->tipoCantidad;
 
         $materiaPrimaId = MateriaPrima::select('nombre')->get();
         foreach ($materiaPrimaId as $materiaPrima) {
             $idMat[] = $materiaPrima->nombre;
         }
-        $tipoCantidadId = TipoCantidad::select('nombre')->get();
-        foreach ($tipoCantidadId as $tipoCantidad) {
-            $idTipo[] = $tipoCantidad->nombre;
-        }
 
         $materiaFinal = MateriaPrima::where('nombre', $idMat[$indexMat])->first()->id;
-        $tipoFinal = TipoCantidad::where('nombre', $idTipo[$indexTipo])->first()->id;
-
+        
         $compra->materiaPrima = $materiaFinal;
         $compra->cantidad = $request->cantidad;
-        $compra->tipoCantidad = $tipoFinal;
         $compra->save();
 
         $request->session()->flash("message", "Actualizado con exito");
