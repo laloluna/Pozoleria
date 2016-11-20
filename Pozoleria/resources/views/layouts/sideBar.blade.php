@@ -17,6 +17,12 @@
     <!-- MetisMenu CSS -->
     <link href="{{URL::asset('assetsSideBar/vendor/metisMenu/metisMenu.min.css')}}" rel="stylesheet">
 
+    <!-- DataTables CSS -->
+    <link href="{{URL::asset('assetsSideBar/vendor/datatables-plugins/dataTables.bootstrap.css')}}" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="{{URL::asset('assetsSideBar/vendor/datatables-responsive/dataTables.responsive.css')}}" rel="stylesheet">
+    
     <!-- Custom CSS -->
     <link href="{{URL::asset('assetsSideBar/dist/css/sb-admin-2.css')}}" rel="stylesheet">
 
@@ -88,17 +94,28 @@
                             <a href="{{ route('/home') }}"><i class="fa fa-home fa-fw"></i> Home </a>
                         </li>
                         <li>
-                            <a href="{{ route('proveedores.index') }}"><i class="fa fa-truck fa-fw"></i> Proveedores</a>
-                            <!-- /.nav-second-level -->
+                            <a href=""><i class="fa fa-users fa-fw"></i> Mesas<span class="fa arrow"></span></a>
                         </li>
                         <li>
-                            <a href="{{ route('materiasprimas.index') }}"><i class="fa fa-cutlery fa-fw"></i> Materias Primas</a>
+                            <a href=""><i class="fa fa-coffee fa-fw"></i> Productos<span class="fa arrow"></span></a>
                         </li>
                         <li>
-                            <a href="{{ route('tiposcantidad.index') }}"><i class="fa fa-balance-scale fa-fw"></i> Unidades</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('compras.index') }}"><i class="fa fa-credit-card fa-fw"></i> Compras</a>
+                            <a><i class="fa fa-table fa-fw"></i> Inventario<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="{{ route('proveedores.index') }}"><i class="fa fa-truck fa-fw"></i> Proveedores</a>
+                                    <!-- /.nav-second-level -->
+                                </li>
+                                <li>
+                                    <a href="{{ route('materiasprimas.index') }}"><i class="fa fa-cutlery fa-fw"></i> Materias Primas</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('tiposcantidad.index') }}"><i class="fa fa-balance-scale fa-fw"></i> Unidades</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('compras.index') }}"><i class="fa fa-credit-card fa-fw"></i> Compras</a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -147,8 +164,20 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="{{URL::asset('assetsSideBar/vendor/metisMenu/metisMenu.min.js')}}"></script>
 
+    <script src="{{URL::asset('assetsSideBar/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::asset('assetsSideBar/vendor/datatables-plugins/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{URL::asset('assetsSideBar/vendor/datatables-responsive/dataTables.responsive.js')}}"></script>
+
     <!-- Custom Theme JavaScript -->
     <script src="{{URL::asset('assetsSideBar/dist/js/sb-admin-2.js')}}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTables-example').DataTable({
+                responsive: true
+            });
+        });
+    </script>
 
 </body>
 

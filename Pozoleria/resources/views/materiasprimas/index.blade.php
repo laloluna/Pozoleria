@@ -43,7 +43,7 @@
                             <td class="center" width="5%">{{ $materiaprima->id }} </td>
                             <td class="center">{{ $materiaprima->nombre }}</td>
                             <td class="center">{{ App\TipoCantidad::find($materiaprima->tipoCantidad)->nombre }}</td>
-                            <td class="center">{{ $materiaprima->precio }}</td>
+                            <td class="center">$ {{ $materiaprima->precio }}</td>
                             <td class="center">{{ App\Proveedor::find($materiaprima->proveedor)->nombre }}</td>
                             <td width="7%">
                                 <div>

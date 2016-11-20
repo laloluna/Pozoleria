@@ -163,6 +163,14 @@ class MateriaPrimaController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        //
+        $materiaPrima = MateriaPrima::where('id', $id)->firstOrFail();
+        $deleted = $materiaPrima->delete();
+
+        if($deleted)
+            $request->session()->flash('message', 'Eliminado con &eacute;xito');
+        else
+            $request->session()->flash('error', 'Algo sali&oacute mal. Contacte a desarrollo');
+
+        return redirect()->route("materiasprimas.index");
     }
 }

@@ -30,7 +30,10 @@
                     <tr>
                         <th>ID</th>
                         <th>Materia Prima</th>
+                        <th>Precio Unitario</th>
                         <th>Cantidad</th>
+                        <th>Total</th>
+                        <th>Fecha</th>
                         <th>Editar</th>
                         <th>Borrar</th>
                     </tr>
@@ -38,9 +41,12 @@
                 <tbody>
                     @foreach ($compras as $compra)
                         <tr>
-                            <td class="center" width="5%">{{ $compra->id }} </td>
+                            <td class="center" width="5%">{{ $compra->id }}</td>
                             <td class="center">{{ App\MateriaPrima::find($compra->materiaPrima)->nombre }}</td>
-                            <td class="center">{{ $compra->cantidad }}</td>
+                            <td class="center">$ {{ App\MateriaPrima::find($compra->materiaPrima)->precio }}</td>
+                            <td class="center">{{ $compra->cantidad }} {{ App\MateriaPrima::find($compra->materiaPrima)->tiposCantidad()->first()->nombre }}</td>
+                            <td class="center">$ {{ $compra->cantidad * App\MateriaPrima::find($compra->materiaPrima)->precio }}</td>
+                            <td class="center">{{ $compra->created_at }}</td>
                             <td width="7%">
                                 <div>
                                     {!! Form::open( [ 'method' => 'GET', 'route' =>['compras.edit', $compra->id]]) !!}
