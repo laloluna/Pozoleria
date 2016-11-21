@@ -17,6 +17,7 @@ class Proveedores extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('telefono');
+            $table->boolean('disponible')->default(true);
             $table->timestamps();
         });
     }

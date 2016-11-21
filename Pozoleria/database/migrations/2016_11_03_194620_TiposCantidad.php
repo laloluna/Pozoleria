@@ -16,6 +16,7 @@ class TiposCantidad extends Migration
         Schema::create('TiposCantidad', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+            $table->boolean('disponible')->default(true);
             $table->timestamps();
         });
     }
