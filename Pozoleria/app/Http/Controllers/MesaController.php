@@ -76,7 +76,8 @@ class MesaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mesa = Mesa::where('id', $id)->firstOrFail();
+        return view('mesas.edit', ['mesa' => $mesa]);
     }
 
     /**

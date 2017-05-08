@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
+
 use App\User;
+
 use App\Mesa;
+
 use App\Cuenta;
+
 use App\Producto;
 
 class ApiController extends Controller
@@ -195,12 +201,13 @@ class ApiController extends Controller
 
     public function makeProductoCuenta(Request $request)
     {
-        $cuenta = Cuenta::find($request->cuenta);
-        $cuenta->productos()->attach($request->producto);
+        DB::table('CuentasProductos')->insert( 
+            ['cuenta' => $request->cuenta, 'producto' => $request->producto
+        ]);
         
         return json_encode(
             array(
-                'status' => 200
+                'state' => 200
             )
         );
     }
@@ -219,7 +226,7 @@ class ApiController extends Controller
 
         return json_encode(
             array(
-                'status' => 200
+                'state' => 200
             )
         );
     }
