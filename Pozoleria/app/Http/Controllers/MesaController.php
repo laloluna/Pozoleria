@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Proveedor;
+use App\Mesa;
 
-class ProveedorController extends Controller
+class MesaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        return view('proveedores.index', ['proveedores' => Proveedor::all()]);
+        return view('mesas.index', ['mesas' => Mesa::all()]);
     }
 
     /**
@@ -25,7 +25,7 @@ class ProveedorController extends Controller
      */
     public function create()
     {
-        return view('proveedores.create');
+        return view('mesas.create');
     }
 
     /**
@@ -38,23 +38,22 @@ class ProveedorController extends Controller
     {
         $this->validate($request,[
             "nombre" => "required|string",
-            "telefono" => "required|string",
         ]);
 
-        $proveedor = $request->all();
+        $mesa = $request->all();
 
-        $alreadyExist = Proveedor::where('nombre', $request->nombre)->count();
+        $alreadyExist = Mesa::where('nombre', $request->nombre)->count();
 
         if($alreadyExist == 0)
-            Proveedor::create($proveedor);
+            Mesa::create($mesa);
         else
         {
-            $request->session()->flash("error", "Ese proveedor ya existe");
+            $request->session()->flash("error", "Esa mesa ya existe");
             return back()->withInput();
         }
 
         $request->session()->flash("message", "Creado con exito");
-        return redirect()->route("proveedores.index");
+        return redirect()->route("mesas.index");
     }
 
     /**
@@ -65,7 +64,8 @@ class ProveedorController extends Controller
      */
     public function show($id)
     {
-        //
+        $mesa = Mesa::where('id', $id)->firstOrFail();
+        return view('mesas.edit', ['mesa' => $producto]);
     }
 
     /**
@@ -76,8 +76,7 @@ class ProveedorController extends Controller
      */
     public function edit($id)
     {
-        $proveedor = Proveedor::where('id', $id)->firstOrFail();
-        return view('proveedores.edit', ['proveedor' => $proveedor]);
+        //
     }
 
     /**
@@ -89,25 +88,24 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $proveedor = Proveedor::where('id', $id)->firstOrFail();
+        $mesa = Mesa::where('id', $id)->firstOrFail();
 
         $this->validate($request,[
             "nombre" => "required|string",
-            "telefono" => "required|string",
         ]);
 
         $updating = $request->all();
         
-        $alreadyExists = Proveedor::where('nombre', $request->nombre)->where('id', '<>', $id)->count();
+        $alreadyExists = Mesa::where('nombre', $request->nombre)->where('id', '<>', $id)->count();
         if($alreadyExists == 0){
-            $proveedor->update($updating);
+            $mesa->update($updating);
         }else{
-            $request->session()->flash('error', "Este proveedor ya existe");
+            $request->session()->flash('error', "Esta mesa ya existe");
             return back()->withInput();
         }
 
         $request->session()->flash("message", "Actualizado con exito");
-        return redirect()->route("proveedores.index");    
+        return redirect()->route("mesas.index");  
     }
 
     /**
@@ -116,16 +114,16 @@ class ProveedorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        $proveedor = Proveedor::where('id', $id)->firstOrFail();
-        $deleted = $proveedor->delete();
+        $mesa = Mesa::where('id', $id)->firstOrFail();
+        $deleted = $mesa->delete();
 
         if($deleted)
             $request->session()->flash('message', 'Eliminado con &eacute;xito');
         else
             $request->session()->flash('error', 'Algo sali&oacute mal. Contacte a desarrollo');
 
-        return redirect()->route('proveedores.index');
+        return redirect()->route('mesas.index');
     }
 }

@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Proveedor;
+use App\Producto;
 
-class ProveedorController extends Controller
+class ProductoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        return view('proveedores.index', ['proveedores' => Proveedor::all()]);
+        return view('productos.index', ['productos' => Producto::all()]);
     }
 
     /**
@@ -25,7 +25,7 @@ class ProveedorController extends Controller
      */
     public function create()
     {
-        return view('proveedores.create');
+        return view('productos.create');
     }
 
     /**
@@ -38,23 +38,24 @@ class ProveedorController extends Controller
     {
         $this->validate($request,[
             "nombre" => "required|string",
-            "telefono" => "required|string",
+            "alias" => "required|string",
+            "precio" => "required|integer",
         ]);
 
-        $proveedor = $request->all();
+        $producto = $request->all();
 
-        $alreadyExist = Proveedor::where('nombre', $request->nombre)->count();
+        $alreadyExist = Producto::where('nombre', $request->nombre)->count();
 
         if($alreadyExist == 0)
-            Proveedor::create($proveedor);
+            Producto::create($producto);
         else
         {
-            $request->session()->flash("error", "Ese proveedor ya existe");
+            $request->session()->flash("error", "Ese producto ya existe");
             return back()->withInput();
         }
 
         $request->session()->flash("message", "Creado con exito");
-        return redirect()->route("proveedores.index");
+        return redirect()->route("productos.index");
     }
 
     /**
@@ -76,8 +77,8 @@ class ProveedorController extends Controller
      */
     public function edit($id)
     {
-        $proveedor = Proveedor::where('id', $id)->firstOrFail();
-        return view('proveedores.edit', ['proveedor' => $proveedor]);
+        $producto = Producto::where('id', $id)->firstOrFail();
+        return view('productos.edit', ['producto' => $producto]);
     }
 
     /**
@@ -89,25 +90,26 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $proveedor = Proveedor::where('id', $id)->firstOrFail();
+        $producto = Producto::where('id', $id)->firstOrFail();
 
         $this->validate($request,[
             "nombre" => "required|string",
-            "telefono" => "required|string",
+            "alias" => "required|string",
+            "precio" => "required|integer",
         ]);
 
         $updating = $request->all();
         
-        $alreadyExists = Proveedor::where('nombre', $request->nombre)->where('id', '<>', $id)->count();
+        $alreadyExists = Producto::where('nombre', $request->nombre)->where('id', '<>', $id)->count();
         if($alreadyExists == 0){
-            $proveedor->update($updating);
+            $producto->update($updating);
         }else{
-            $request->session()->flash('error', "Este proveedor ya existe");
+            $request->session()->flash('error', "Este producto ya existe");
             return back()->withInput();
         }
 
         $request->session()->flash("message", "Actualizado con exito");
-        return redirect()->route("proveedores.index");    
+        return redirect()->route("productos.index");   
     }
 
     /**
@@ -118,14 +120,14 @@ class ProveedorController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $proveedor = Proveedor::where('id', $id)->firstOrFail();
-        $deleted = $proveedor->delete();
+        $producto = Producto::where('id', $id)->firstOrFail();
+        $deleted = $producto->delete();
 
         if($deleted)
             $request->session()->flash('message', 'Eliminado con &eacute;xito');
         else
             $request->session()->flash('error', 'Algo sali&oacute mal. Contacte a desarrollo');
 
-        return redirect()->route('proveedores.index');
+        return redirect()->route('productos.index');
     }
 }

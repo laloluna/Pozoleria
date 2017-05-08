@@ -19,6 +19,10 @@ Route::group(['middleware'=>'auth'], function() {
         return view('/home');
     });
 
+    Route::resource('mesas', 'MesaController');
+
+    Route::resource('productos', 'ProductoController');
+    
     Route::resource('proveedores', 'ProveedorController');
 
     Route::resource('materiasprimas', 'MateriaPrimaController');

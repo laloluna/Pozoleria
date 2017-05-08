@@ -17,14 +17,7 @@ class Productos extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('alias');
-            $table->integer('tipoProducto')->unsigned();
-            $table->foreign('tipoProducto')->references('id')->on('TiposProducto')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('tamano')->unsigned()->nullable();
-            $table->foreign('tamano')->references('id')->on('Tamanos')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('color')->unsigned()->nullable();
-            $table->foreign('color')->references('id')->on('Colores')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('tipoCarne')->unsigned()->nullable();
-            $table->foreign('tipoCarne')->references('id')->on('TiposCarne')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('precio');
             $table->boolean('disponible')->default(true);
             $table->timestamps();
         });

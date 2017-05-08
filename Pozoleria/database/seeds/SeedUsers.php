@@ -16,6 +16,7 @@ class SeedUsers extends Seeder
         	'name' => 'pozolero1',
         	'email' => 'p1@gmail.com',
         	'password' => bcrypt('secret'),
+            'key' => sha1('secret'),
         ]);
     }
 }

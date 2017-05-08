@@ -15,12 +15,10 @@ class Cuentas extends Migration
     {
         Schema::create('Cuentas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('mesero')->unsigned();
-            $table->foreign('mesero')->references('id')->on('Meseros')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('mesa')->unsigned();
             $table->foreign('mesa')->references('id')->on('Mesas')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('personas');
-            $table->boolean('descuento');
+            $table->integer('total')->default(0);
+            $table->boolean('activa')->default(true);
             $table->boolean('disponible')->default(true);
             $table->timestamps();
         });

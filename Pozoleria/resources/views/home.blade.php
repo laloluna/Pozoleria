@@ -4,4 +4,9 @@
 
 @section('content')
 
+			<?php 
+			strpos(Request::url(), 'home') ? $jj = 'active' : $jj = 'inactive';
+			echo $jj;
+        	?>
+
 @endsection
